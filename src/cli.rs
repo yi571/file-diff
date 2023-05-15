@@ -20,6 +20,11 @@ pub enum Action {
         /// folder path
         #[structopt(short, long, parse(from_os_str))]
         path: Option<PathBuf>,
+    },
+    List {
+        /// folder path
+        #[structopt(short, long, parse(from_os_str))]
+        path: Option<PathBuf>,
     }
 }
 
