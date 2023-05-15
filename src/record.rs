@@ -1,5 +1,6 @@
 use std::{path::PathBuf, env};
 
+use time::OffsetDateTime;
 use walkdir::{DirEntry, WalkDir};
 
 use crate::hashing::{CsvData, self, save_csv};
@@ -29,7 +30,8 @@ pub fn record(msg:String, path: Option<PathBuf>){
                 data.push(csv_data);
             }
         }
-        init_path.push(format!("{}.csv", msg));
+        let local = OffsetDateTime::now_local().unwrap();
+        init_path.push(format!("{}_{}.csv", local.unix_timestamp(), msg));
         save_csv(init_path, data);
 
     } else {

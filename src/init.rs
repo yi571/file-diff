@@ -3,6 +3,7 @@ use std::{
     fs::{self},
     path::PathBuf,
 };
+use time::OffsetDateTime;
 use walkdir::{DirEntry, WalkDir};
 
 use crate::hashing::{self, save_csv, CsvData};
@@ -13,13 +14,10 @@ pub fn init_record(path: Option<PathBuf>) {
         None => env::current_dir().unwrap(),
     };
 
-    
     check_init_folder_exist(&path);
-
 }
 
 fn check_init_folder_exist(path: &PathBuf) {
-
     let mut init_path: PathBuf = path.clone();
     init_path.push(".file-diff");
     if init_path.exists() {
@@ -43,7 +41,9 @@ fn check_init_folder_exist(path: &PathBuf) {
             }
         }
 
-        init_path.push("init.csv");
+        let local = OffsetDateTime::now_local().unwrap();
+
+        init_path.push(format!("{}_init.csv", local.unix_timestamp()));
         save_csv(init_path, data);
     }
 }
