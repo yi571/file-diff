@@ -27,7 +27,7 @@ pub enum Action {
         #[structopt(short, long, parse(from_os_str))]
         path: Option<PathBuf>,
     },
-    /// compare two record
+    /// compare two records
     Compare {
         /// folder path
         #[structopt(short, long, parse(from_os_str))]
