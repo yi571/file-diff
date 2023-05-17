@@ -33,9 +33,10 @@ pub fn compare(
         }
 
         let result:Vec<CompareCsvData> = CompareCsvData::new(&originit_path.to_string_lossy(), &target_path.to_string_lossy());
-        println!("path  origin_hash  target_hash");
+        println!("| path | {origin_item} | {target_item}|");
+        println!("| ----- | ----- | ----- |");
         for item in &result {
-            println!("{}  {}  {}", item.path, item.origin_hash, item.target_hash);
+            println!("| {} | {} | {} |", item.path, item.origin_hash, item.target_hash);
         }
 
         match export_path{
@@ -46,7 +47,7 @@ pub fn compare(
                 csv_path.push(format!("{}_compare.csv", local.unix_timestamp()));
 
 
-                CompareCsvData::save_to_csv(csv_path, result)
+                CompareCsvData::save_to_csv(csv_path, result, origin_item, target_item)
             },
             None => {},
         }

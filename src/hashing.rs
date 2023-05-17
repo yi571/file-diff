@@ -117,16 +117,21 @@ impl CompareCsvData {
         result
     }
 
-    pub fn save_to_csv(csv_path: PathBuf, data:Vec<CompareCsvData>){
+    pub fn save_to_csv(
+        csv_path: PathBuf,
+        data: Vec<CompareCsvData>,
+        origin_item: String,
+        target_item: String,
+    ) {
         let mut wtr = csv::Writer::from_path(csv_path).expect("csv init error");
-        wtr.write_record(&["path", "origin_hash", "target_hash"])
+        wtr.write_record(&["path", &origin_item, &target_item])
             .expect("write head error");
-    
+
         for i in data {
             wtr.write_record(&[i.path, i.origin_hash, i.target_hash])
                 .expect("write data error");
         }
-    
+
         wtr.flush().expect("save csv error")
     }
 
